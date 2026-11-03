@@ -395,11 +395,3 @@ h1 {
   text-align: center;
   max-width: 560px;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .app { animation: none; }
-  .tile { transition: none; }
-  .tile.enter, .tile.fresh, .tile.vanish { animation: none; }
-  .tile.selected { animation: none; }
-  .pop { animation-duration: 0.3s; }
-}

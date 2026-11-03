@@ -346,9 +346,3 @@ h1 {
   font-size: 13px;
   text-align: center;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .tile { transition: none; }
-  .app { animation: none; }
-  .board.won .tile span { animation: none; }
-}
