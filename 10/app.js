@@ -216,7 +216,7 @@ function doHit(a, b) {
   grid[b.j][b.i] = null;
   deselect();
   score += gain;
-  popScore(b.i, b.j, '+' + gain, 'gain');
+  popPath(a, b, k => '+' + (k + 1), '+' + (d + 1), 'gain', '+1');
   slide(a, b.i, b.j, d, () => {
     a.el.classList.add('vanish');
     b.el.classList.add('vanish');
@@ -226,7 +226,8 @@ function doHit(a, b) {
 }
 
 function doMove(a, pos) {
-  const d = distance(a, pos);
+  const from = { i: a.i, j: a.j };
+  const d = distance(from, pos);
   const cost = sumTo(d);
   grid[a.j][a.i] = null;
   grid[pos.j][pos.i] = a;
@@ -234,7 +235,7 @@ function doMove(a, pos) {
   a.j = pos.j;
   deselect();
   score -= cost;
-  popScore(pos.i, pos.j, '\u2212' + cost, 'loss');
+  popPath(from, pos, k => '\u2212' + k, '\u2212' + d, 'loss');
   slide(a, pos.i, pos.j, d, () => {
     a.el.style.zIndex = '';
   });
@@ -246,15 +247,29 @@ function boardEmpty() {
 
 /* ---------- floating scores ---------- */
 
-function popScore(i, j, text, cls) {
+function popScore(i, j, text, cls, delay = 0) {
   const cell = (boardEl.clientWidth - 2 * PAD - (N - 1) * GAP) / N;
   const pop = document.createElement('div');
   pop.className = 'pop ' + cls;
   pop.textContent = text;
   pop.style.left = PAD + i * (cell + GAP) + cell / 2 + 'px';
   pop.style.top = PAD + j * (cell + GAP) + cell / 2 + 'px';
+  if (delay) pop.style.animationDelay = delay + 'ms';
   fxEl.appendChild(pop);
   pop.addEventListener('animationend', () => pop.remove());
+}
+
+// a pop in every cell the move touches — origin included for merges — each
+// showing its own step's cost/gain, so the ramp of distance reads cell by cell
+function popPath(from, to, valueAt, destValue, cls, originValue) {
+  const dx = Math.sign(to.i - from.i);
+  const dy = Math.sign(to.j - from.j);
+  const d = distance(from, to);
+  if (originValue != null) popScore(from.i, from.j, originValue, cls + ' step', 0);
+  for (let k = 1; k < d; k++) {
+    popScore(from.i + dx * k, from.j + dy * k, valueAt(k), cls + ' step', k * STEP_MS);
+  }
+  popScore(to.i, to.j, destValue, cls, d * STEP_MS);
 }
 
 /* ---------- wave: fresh tiles ---------- */

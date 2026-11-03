@@ -303,6 +303,9 @@ h1 {
 .pop.gain { color: #b9f6ca; }
 .pop.loss { color: #ff8a80; }
 
+/* intermediate cells on the way to the destination stay quieter than the total */
+.pop.step { font-size: clamp(12px, 2.6vw, 17px); }
+
 @keyframes float-up {
   0% { opacity: 0; translate: 0 8px; scale: 0.7; }
   20% { opacity: 1; scale: 1.1; }
