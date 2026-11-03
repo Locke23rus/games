@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Chervonets</title>
+  <meta name="description" content="Chervonets — slide matching numbers together, clear the board and bank the time bonus before the clock runs out.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Ccircle%20cx='32'%20cy='32'%20r='30'%20fill='%23f0a93c'/%3E%3Ccircle%20cx='32'%20cy='32'%20r='24'%20fill='none'%20stroke='%23a8690f'%20stroke-width='3'/%3E%3Ctext%20x='32'%20y='42'%20font-family='Arial,sans-serif'%20font-size='26'%20font-weight='bold'%20text-anchor='middle'%20fill='%23a8690f'%3E10%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="masthead">
+      <h1>Chervonets</h1>
+      <p class="tagline">Slide matching numbers together — clear the board, bank the bonus</p>
+    </header>
+
+    <section class="hud" aria-label="Game statistics">
+      <div class="chip">
+        <span class="chip-label">Score</span>
+        <span class="chip-value" id="score">0</span>
+      </div>
+      <div class="chip">
+        <span class="chip-label">Best</span>
+        <span class="chip-value" id="best">0</span>
+      </div>
+      <div class="chip">
+        <span class="chip-label">Time</span>
+        <span class="chip-value" id="time">5:00</span>
+      </div>
+    </section>
+
+    <div class="wave-row" aria-label="Time until the next tile appears">
+      <span class="wave-label">Next tile</span>
+      <div class="wave"><div class="wave-fill" id="wave"></div></div>
+    </div>
+
+    <div class="board-wrap">
+      <div class="board" id="board" role="application"
+           aria-label="Chervonets board. Pick a tile, then aim along its row or column: equal tiles merge and vanish, slides into empty space cost points."></div>
+      <div class="fx" id="fx" aria-hidden="true"></div>
+
+      <div class="overlay" id="overlay" role="dialog" aria-labelledby="ovTitle">
+        <div class="card">
+          <h2 id="ovTitle">Finish!</h2>
+          <p class="card-stats" id="ovStats"></p>
+          <p class="badge" id="ovBadge">★ New record</p>
+          <button class="btn primary" id="ovBtn" type="button">Play again</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="controls" aria-label="Controls">
+      <button class="btn primary" id="newGame" type="button">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"
+             stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 12a9 9 0 1 0 3-6.7"/>
+          <path d="M3 4v5h5"/>
+        </svg>
+        New game
+      </button>
+      <button class="btn" id="pauseBtn" type="button">Pause</button>
+    </section>
+
+    <footer class="hint">Pick a tile, then aim along its row or column — twins merge and vanish, slides cost points, and a fresh number drops in every 10 seconds. Space pauses.</footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
