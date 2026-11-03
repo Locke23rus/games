@@ -103,15 +103,44 @@ function newGame() {
 
 /* ---------- selection and actions ---------- */
 
+let crossH = null, crossV = null;
+
+function showCross(i, j) {
+  hideCross();
+  const inner = boardEl.clientWidth - 2 * PAD;
+  const cell = (inner - (N - 1) * GAP) / N;
+  crossH = document.createElement('div');
+  crossH.className = 'cross';
+  crossH.style.left = PAD + 'px';
+  crossH.style.top = PAD + j * (cell + GAP) + 'px';
+  crossH.style.width = inner + 'px';
+  crossH.style.height = cell + 'px';
+  crossV = document.createElement('div');
+  crossV.className = 'cross';
+  crossV.style.left = PAD + i * (cell + GAP) + 'px';
+  crossV.style.top = PAD + 'px';
+  crossV.style.width = cell + 'px';
+  crossV.style.height = inner + 'px';
+  fxEl.append(crossH, crossV);
+}
+
+function hideCross() {
+  if (crossH) crossH.remove();
+  if (crossV) crossV.remove();
+  crossH = crossV = null;
+}
+
 function select(tile) {
   deselect();
   selected = tile;
   tile.el.classList.add('selected');
+  showCross(tile.i, tile.j);
 }
 
 function deselect() {
   if (selected) selected.el.classList.remove('selected');
   selected = null;
+  hideCross();
 }
 
 boardEl.addEventListener('click', (e) => {
