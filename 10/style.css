@@ -255,18 +255,28 @@ h1 {
   to { scale: 1; }
 }
 
-/* merge/slide-away */
-.tile.vanish {
-  animation: pop-out 0.32s ease both;
-}
-
-@keyframes pop-out {
-  to { scale: 1.5; opacity: 0; }
-}
-
 /* fresh wave tile */
 .tile.fresh {
   animation: pop-in 0.3s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+/* merge: fade away, collapsing into the merge point.
+ * scale() lives inside transform on purpose: the independent `scale` property
+ * composes after `transform`, so it rescales the translate too and drags the
+ * tile toward the board origin while it shrinks. */
+.tile.vanish {
+  animation: fade-out 0.3s ease-out both;
+}
+
+@keyframes fade-out {
+  from {
+    transform: translate(calc(var(--c) * (100% + var(--gap))), calc(var(--r) * (100% + var(--gap)))) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translate(calc(var(--c) * (100% + var(--gap))), calc(var(--r) * (100% + var(--gap)))) scale(0.6);
+    opacity: 0;
+  }
 }
 
 /* ---------- floating scores ---------- */
