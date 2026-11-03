@@ -412,6 +412,9 @@ document.addEventListener('visibilitychange', () => {
   if (document.hidden) pause();
 });
 
+// another app took focus while the tab is still visible
+addEventListener('blur', () => pause());
+
 /* ---------- init ---------- */
 
 buildSlots();
