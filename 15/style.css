@@ -211,6 +211,7 @@ h1 {
 .win.show { opacity: 1; visibility: visible; }
 
 .win-card {
+  position: relative;
   padding: 26px 36px;
   text-align: center;
   border-radius: 20px;
@@ -242,13 +243,19 @@ h1 {
 
 .badge {
   display: none;
-  margin: 12px 0 0;
-  padding: 4px 12px;
+  position: absolute;
+  top: -14px;
+  right: -18px;
+  padding: 5px 14px;
   border-radius: 999px;
   font-size: 13px;
-  font-weight: 700;
-  color: #31210a;
-  background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--gold-1);
+  background: rgba(25, 20, 10, 0.92);
+  border: 1px solid rgba(240, 169, 60, 0.45);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+  transform: rotate(8deg);
 }
 
 .badge.show { display: inline-block; }
