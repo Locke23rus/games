@@ -4,8 +4,7 @@
  * in that direction carries the same number, both merge and vanish for
  * points; otherwise the tile slides as far as it can for a small cost.
  * Every 10 seconds a fresh number drops in. Clear the board to bank the
- * remaining time as bonus points; when time runs out, each empty cell
- * pays 1 point.
+ * remaining time as bonus points.
  */
 'use strict';
 
@@ -246,12 +245,6 @@ function boardEmpty() {
   return grid.every(row => row.every(cell => cell === null));
 }
 
-function countEmpty() {
-  let n = 0;
-  for (const row of grid) for (const cell of row) if (!cell) n++;
-  return n;
-}
-
 /* ---------- floating scores ---------- */
 
 function popScore(i, j, text, cls, delay = 0) {
@@ -366,8 +359,6 @@ function finish(cleared) {
   deselect();
   pauseBtn.disabled = true;
   pauseBtn.textContent = 'Pause';
-  const emptyBonus = cleared ? 0 : countEmpty();
-  score += emptyBonus;
   const record = score > best;
   if (record) {
     best = score;
@@ -378,8 +369,7 @@ function finish(cleared) {
   }
   ovStatsEl.textContent = cleared
     ? `Board cleared — score: ${score}`
-    : `Time's up — score: ${score}` +
-      (emptyBonus ? ` (+${emptyBonus} empty cells)` : '');
+    : `Time's up — score: ${score}`;
   showOverlay('over');
   hud();
 }
